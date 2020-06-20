@@ -1,0 +1,37 @@
+{% extends 'base.html' %} %}
+{% block title %} blog search
+{% endblock title %}
+{% block blogactive %} active{% endblock blogactive %}
+{% block body %}
+<div class="pricing-header px-3 py-3  pb-md-4 mx-auto text-center ">
+  <h6 class = "display-4"><strong>search results for <strong>{{search}}</strong></h6>
+</div>
+{% if allpost|length < 1 %}
+<div class = "container text-center ">
+<h5 class = "display-6 "> No results found for  <strong>{{search}} </strong> !!</h5>
+suggestion : <br>
+try different keywords (*_*)
+</div>
+{% endif %}
+{% for post in allpost %}
+<div class="container px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" >
+<div class="row mb-2">
+    <div class="col-md-12">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h4><strong class="d-inline-block mb-2 text-primary">{{post.title}}</strong></h4>
+          <h6 class="mb-0">artical by {{post.author}}</h6>
+          <div class="mb-1 text-muted">{{post.timestamp}}</div>
+          <p class="card-text mb-auto">{{post.content| truncatechars:300|safe}}</p>
+          <a href="/blog/{{post.slug}}/" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="450" height="350" aria-label="Placeholder: Thumbnail" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock body %}
+<h1>blog page</h1>

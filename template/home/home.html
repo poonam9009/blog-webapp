@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %} blog home
+{% endblock title %}
+{% block homeactive %} active {% endblock homeactive %}
+{% block body %}
+<body>
+<main role="main" class="container">
+  <div class="jumbotron">
+    <h1>Welcome {{user.first_name}} in My Blog</h1>
+    <p class="lead">Hey {{user.first_name}},</br>This is an blog webapp for technical and other online world related topics.click here and have a read (^_^)</p>
+    <a class="btn btn-lg btn-primary" href="/blog/" role="button">read &raquo;</a>
+  </div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">most popular blog post</h1>
+  <p class="lead">these are the most popular blogpost from my blog ,take a glance !!
+    it’s built with default Bootstrap components and utilities with little customization.</p>
+</div>
+{% for post in allpost %}
+{% if forloop.counter|divisibleby:2 and forloop.counter > 0 and forloop.counter < 3  %}
+<div class="row mb-2">
+
+  <div class="col-md-6">
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <h4><strong class="d-inline-block mb-2 text-primary">{{post.title}}</strong></h4>
+        <h6 class="mb-0">artical by {{post.author}}</h6>
+        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <p class="card-text mb-auto">{{post.content| truncatechars:180|safe}}</p>
+        <a href="/blog/{{post.slug}}/" class="stretched-link">Continue reading</a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+        <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="250" height="333" aria-label="Placeholder: Thumbnail" />
+      </div>
+    </div>
+  </div>
+  {% endif %}
+    {% if forloop.counter|divisibleby:5 and forloop.counter > 4 and  forloop.counter < 6 %}
+  <div class="col-md-6">
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <h4><strong class="d-inline-block mb-2 text-primary">{{post.title}}</strong></h4>
+        <h6 class="mb-0">artical by {{post.author}}</h6>
+        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <p class="card-text mb-auto">{{post.content| truncatechars:100|safe}}</p>
+        <a href="/blog/{{post.slug}}/" class="stretched-link">Continue reading</a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+        <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="250" height="330" aria-label="Placeholder: Thumbnail" />
+      </div>
+    </div>
+    {% endif %}
+    
+     {% endfor %}
+     </div>
+</main>
+</body>
+{% endblock body %}

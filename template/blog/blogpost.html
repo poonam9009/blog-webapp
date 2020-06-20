@@ -1,0 +1,159 @@
+{% extends 'base.html' %} %}
+{% block title %} blogposts
+{% endblock title %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+{% block body %}
+{% load get_dict %}
+{% load static %}
+{% load humanize %}
+<!-- <div class="row-my-3 ">
+  <div class="col-md-6">
+    <h2 class="blog-post-title">{{post.title}}</h2>
+    <p class="blog-post-meta">{{post.timestamp}} article by <a href="https://poonam9009.github.io/myPortfolio/"> {{post.author}}</a></p>
+   <p>{{post.content}}</p></div>
+    <aside class="col-md-6">
+    <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="300" height="300" aria-label="Placeholder: Thumbnail"/>
+    </aside>
+</div> -->
+
+<div class="container">
+  <div class="row mt-4 mx-auto">
+    <div class="col-md-8 blog-main" style="background-color: #EAEBEC ;">
+      <h3 class="pb-4 mb-4 font-italic border-bottom">Blogposts....</h3>
+      <div class="blog-post">
+        <h2 class="blog-post-title">{{post.title}}</h2>
+        <p class="blog-post-meta">{{post.timestamp}} by<a href="https://poonam9009.github.io/myPortfolio/">
+            {{post.author}}</a></p>
+        <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width=""
+          data-layout="standard" data-action="like" data-size="small" data-share="true" data-show-faces="true"></div>
+        <p>{{post.content|safe}}</p>
+      </div>
+    </div>
+
+    <aside class="col-md-4 blog-sidebar">
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="font-italic">About</h4>
+        <p class="mb-0">My Blog App <em>A blogging web app to share your thoughts on various topics.</em></p>
+      </div>
+      <div class="p-4">
+        <h4 class="font-italic">Elsewhere</h4>
+        <ol class="list-unstyled">
+          <li><a href="https://www.onlineworld-glan.com/">Wiki</a></li>
+          <li><a href="https://twitter.com/onlineshopping?lang=en">Twitter</a></li>
+          <li><a href="https://www.facebook.com/online.shopping/">Facebook</a></li>
+        </ol>
+        <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="450" height="350"
+          aria-label="Placeholder: Thumbnail" />
+      </div>
+    </aside>
+  </div>
+</div>
+<div class="container mx-auto ">
+  <h2>Comments({{comments.count}})</h2>
+  <form action="/blog/postComment" method="post">{% csrf_token %}
+    <div clas="row mx-auto  ">
+      <div class="form-group ">
+        <label for="comment "></label>
+        <input class=" p-2 col-md-10" type="text" name="comment" placeholder="enter your comment">
+        <div class="form-group">
+          <input type="hidden" class="form-control " id="sno" name="postSno" value="{{post.sno}}">
+          <input type="hidden" value="" name="parentSno">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</div>
+
+{% for comment in comments %}
+<div class="row-my-3 ">
+  <div class="col-md-1 ">
+    <img src="{% static "img/user1.png" %}" class="rounded mx-auto d-block w-100 p-1 rounded" alt="user">
+  </div>
+  <div class="col-md-10">
+    <div><strong style="color:#037AC8;font-size:16px;"> {{comment.user.username}}</strong> <span
+        style="font-size: small;">{{comment.timestamp| naturaltime}}</span> </div>
+    <div>
+      <p class="rounded-pill p-3" style="color: #050101 ;font-size:14px; background-color:#EAEBEC; "><strong>
+          {{comment.comment}}</strong></p>
+    </div>
+
+    <div class="reply">
+
+      <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#replybox{{comment.sno}}"
+        aria-expanded="false" aria-controls="replybox{{comment.sno}}">
+        Reply
+      </button>
+
+      <div class="collapse" id="replybox{{comment.sno}}">
+        <div>
+          <form action="/blog/postComment" method="post">{% csrf_token %}
+            <div clas="row mx-auto  ">
+              <div class="form-group ">
+                <input class="ounded-pill p-1 mx-5 col-md-11" type="text" name="comment"
+                  placeholder="enter your comment">
+                <input type="hidden" value="{{comment.sno}}" name="parentSno">
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control " id="sno" name="postSno" value="{{post.sno}}">
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm " style="margin-left: 55px;">Submit</button>
+            </div>
+          </form>
+        </div>
+
+
+        {% for reply in replydict|get_val:comment.sno %}
+        <div class="row mx-5">
+        <div class="col-md-1">
+        <img src="{% static "img/user1.png" %}" class="rounded mx-auto d-block w-100 p-1 rounded" alt="user">
+        </div>
+        <div class="col-md-10">
+        <b style="font-size: small;">{{reply.user.username}}</b><span style="font-size: small;">{{comment.timestamp| naturaltime}}</span>
+        <div class="rounded-pill p-1" style="color: #050101 ;font-size:13px; background-color:#EAEBEC; ">{{reply.comment}}</div>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endfor %}
+
+</div>
+</div>
+
+
+<!-- <div class="toast" data-autohide="false">
+  <div class="toast-header">
+    <strong class="mr-auto text-primary">Notification</strong>
+    <small class="text-muted">5 mins ago</small>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+  </div>
+  <div class="toast-body">
+    hope you like this blog,thanks!!
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('.toast').toast('show');
+  });
+  </script> -->
+
+
+<!-- <script>
+      $(document).ready(function(){
+          $("#myToast").toast('show');
+      });
+    </script> -->
+
+{% endblock body %}
+
+
+
+

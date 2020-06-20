@@ -1,0 +1,40 @@
+{% extends 'base.html' %} %}
+{% block title %} blog 
+{% endblock title %}
+{% block blogactive %} active{% endblock blogactive %}
+{% block js %}
+<script>
+  let previews = document.getElementsByClassName('preview');
+  Array.from(previews).forEach((element)=>{
+    element.innerHTML = element.innerText;
+  })
+</script>
+{% endblock js %}
+{% block body %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">most popular blog</h1>
+  <p class="lead">All the blog posts will be available here!!</p>
+</div>
+{% for post in allpost %}
+<div class="container px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" >
+<div class="row mb-2">
+    <div class="col-md-12">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h4> <a href="{{post.title}}/" ><strong class="d-inline-block mb-2 text-primary">{{post.title}}</strong></a></h4>
+          <h6 class="mb-0">artical by {{post.author}}</h6>
+          <div class="mb-1 text-muted">{{post.timestamp}}</div>
+          <!-- <p class="card-text mb-auto my-0 mx-auto"><div class="preview">{{post.content| truncatechars:300|safe}}</div></p> -->
+          <div class="preview">{{post.content| truncatechars:300|safe}}</div>
+          <a class="btn btn-outline-primary" href="{{post.title}}/" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img src="/static/{{post.thumbnail }}" class="bd-placeholder-img" width="450" height="350" aria-label="Placeholder: Thumbnail"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock body %}
+<h1>blog page</h1>

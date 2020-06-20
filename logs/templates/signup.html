@@ -1,0 +1,191 @@
+
+<style>
+
+body {
+  background: #456;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.signdiv {
+  width: 400px;
+  margin: 16px auto;
+  font-size: 16px;
+}
+
+* Reset top and bottom margins from certain elements */
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* The triangle form is achieved by a CSS hack */
+.login-triangle {
+  width: 0;
+  margin-right: auto;
+  margin-left: auto;
+  border: 12px solid transparent;
+  border-bottom-color: #28d;
+}
+
+.login-header {
+  background: #28d;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.form-group {
+  padding: 12px;
+}
+
+.form-control{
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.form-control[type="email"],
+.form-control[type="text"],
+.form-control[type="submit"],
+.form-control[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+}
+
+/* Text fields' focus effect */
+.form-control[type="email"]:focus,
+.form-control[type="text"]:focus,
+.form-control[type="submit"]:focus,
+.form-control[type="password"]:focus {
+  border-color: #888;
+}
+
+.form-control[type="submit"] {
+  background: #28d;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn[type="submit"]:hover {
+  background: #17c;
+}
+
+/* Buttons' focus effect */
+.btn[type="submit"]:focus {
+  border-color: #05a;
+}
+
+.btn{
+    padding: 12px;
+    background: #17c;
+    border-color: #05a;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 16px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+.messages{
+  margin-top: 3px;
+  padding: 12px;
+  background: #17c;
+  border-color: #05a;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<div class = "signdiv" >
+ <div class="login-triangle"></div>
+ <h2 class="login-header">Sign up</h2>
+<form action="/home/signup/" method="post" class="login-container" > {% csrf_token %}
+
+    <div class="form-group">
+        <label for="name">enter your first name</label>
+        <input type="text" class="form-control" name="name" placeholder="enter your first name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="last">enter your last name</label>
+        <input type="text" class="form-control" name="last" placeholder="enter your last name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">enter your email</label>
+        <input type="email" class="form-control" name="email" placeholder="enter your email" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">enter your password</label>
+        <input type="text" class="form-control" name="password" placeholder="enter your password" required>
+    </div>
+    <div class="form-group"></div>
+    <button type="submit" class="btn" value="Signup">Submit</button>
+    </div>
+</form>
+</div>
+
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-primary" role="alert">
+      <strong> {{message}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+         
